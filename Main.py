@@ -45,6 +45,11 @@ def game_time(player, word, hint):
             if char in chars_guessed:
                 blank += char
                 continue
+
+            if char == ' ':
+                blank += ' '
+                continue
+
             blank += "_"
 
         return blank
@@ -86,7 +91,7 @@ def game_time(player, word, hint):
         chars_guessed += (guess,)
 
     player.add_score()
-    print(f"You guessed it, it's {word}")
+    print(f"You guessed it, it's {word}.")
     return f"Game winned!! Current score: {player.get_score()}"
 
 
@@ -125,7 +130,7 @@ def main():
 
         word_list.pop(word_index)
 
-    print(f"Congratulations {new_player.get_name()}, your score is {new_player.get_score()}")
+    print(f"Congratulations {new_player.get_name()}, your score is {new_player.get_score()}.")
     print("See you next time :)")
 
 
