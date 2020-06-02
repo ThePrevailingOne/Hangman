@@ -1,7 +1,5 @@
-idiot, trump
-oryzae, rice
-bonifasius, the next newton
-bryant, Gojek next CEO
-taiwan, jocelyn
-jardine, matthew
-may thee you, matthew username
+taiwan,jocelyn
+may thee you,matthew username
+ukulele,steven's instrument
+theprevailingone,github alvin
+trump,idiot

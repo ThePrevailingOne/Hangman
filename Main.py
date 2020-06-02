@@ -68,7 +68,7 @@ def game_time(player, word, hint):
             continue
 
         if guess == 'skip':
-            return 'Skipping game...'
+            return 'Skipping round...'
 
         if len(guess) > 1:
             print("Please enter just one character at a time.")
@@ -86,26 +86,27 @@ def game_time(player, word, hint):
             player.reduce_lives()
 
         if player.get_lives() == 0:
-            return f"Game lost... (answer: {word})"
+            return f"Round lost... (answer: {word})"
 
         chars_guessed += (guess,)
 
     player.add_score()
     print(f"You guessed it, it's {word}.")
-    return f"Game winned!! Current score: {player.get_score()}"
+    return f"Round winned!! Current score: {player.get_score()}"
 
-
-
-def main():
-    input("Welcome to BC Hangman!!")
+def new_game():
     input("Before getting into the game, there's a few rule:")
     input("1. First, you can only input latin characters, and just one character per guess.")
-    input("2. Play until you guess the word, if you don't feel like finishing the game, type 'quit'.")
+    input("2. Play until you guess the word, if you don't feel like finishing the round, type 'skip'.")
     input("3. Finally, Have fun while playing!! :)")
 
-    word_list = readcsv('words.txt')
     new_player_name = input('Do tell us your name: ')
+    while not new_player_name:
+        print("please don't leave it blank :)")
+        new_player_name = input('Do tell us your name: ')
+
     new_player = Player(new_player_name)
+    word_list = readcsv('words.txt')
     still_playing = True
 
     while still_playing and word_list:
@@ -129,9 +130,58 @@ def main():
             print("please enter either 'n' or 'y'.")
 
         word_list.pop(word_index)
+        if not word_list:
+            print("You guessed all the words!!! :O")
 
     print(f"Congratulations {new_player.get_name()}, your score is {new_player.get_score()}.")
-    print("See you next time :)")
+    print('Returning to main menu.')
+
+def add_word(csvfilename):
+    if not csvfilename:
+        return 'csv file name not valid'
+
+    with open(csvfilename, 'a+', newline = '') as csv_file:
+        word_adder = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        still_adding = True
+
+        while still_adding:
+            word = input("New word: ").lower()
+            hint = input("Hint for the word: ").lower()
+
+            word_adder.writerow([word, hint])
+
+            option = input('Add more words? (y/n) ').lower()
+            while option != 'y' and option != 'n':
+                print('Please type in only y or n.')
+                option = input('Add more words? (y/n) ').lower()
+
+            if option == 'n':
+                still_adding = False
+
+    print("Returning to main menu.")
+
+def main():
+    input("Welcome to BC Hangman!!")
+    leave = False
+
+    while not leave:
+        option = input("Would you like to start a new game or add new words to guess or quit? ('start' or 'add' or 'quit') ").lower()
+        while option != 'start' and option != 'add' and option != 'quit':
+            print("Only 'start' (to start a game), 'add' (to add new words) is allowed, and 'quit' (to quit game).")
+            option = input("Would you like to start a new game or add new words to guess or quit? ('start' or 'add' or 'quit') ").lower()
+            
+
+        if option == 'start':
+            new_game()
+
+        if option == 'add':
+            add_word('words.txt')
+
+        if option == 'quit':
+            leave = True
+
+    print("Thanks for playing along, see you next time :)")
+    
 
 
 main()
