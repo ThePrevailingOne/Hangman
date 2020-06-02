@@ -39,7 +39,7 @@ class Player:
         return self.score
 
 def game_time(player, word, hint):
-    def blanks():
+    def blanks(): #
         blank = ""
         for char in word:
             if char in chars_guessed:
@@ -162,9 +162,8 @@ def add_word(csvfilename):
 
 def main():
     input("Welcome to BC Hangman!!")
-    leave = False
 
-    while not leave:
+    while True:
         option = input("Would you like to start a new game or add new words to guess or quit? ('start' or 'add' or 'quit') ").lower()
         while option != 'start' and option != 'add' and option != 'quit':
             print("Only 'start' (to start a game), 'add' (to add new words) is allowed, and 'quit' (to quit game).")
@@ -178,7 +177,7 @@ def main():
             add_word('words.txt')
 
         if option == 'quit':
-            leave = True
+            break
 
     print("Thanks for playing along, see you next time :)")
     
