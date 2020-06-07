@@ -1,4 +1,3 @@
-from time import sleep
 from random import randint
 import csv
 
@@ -39,7 +38,7 @@ class Player:
         return self.score
 
 def game_time(player, word, hint):
-    def blanks(): #
+    def blanks():
         blank = ""
         for char in word:
             if char in chars_guessed:
